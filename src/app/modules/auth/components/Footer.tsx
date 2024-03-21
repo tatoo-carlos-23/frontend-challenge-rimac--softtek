@@ -1,5 +1,5 @@
-import LogoDesktop from "../../../assets/imgs/logo-rimac-white-desktop.png";
-import LogoMovil from "../../../assets/imgs/logo-rimac-white-movil.png";
+import LogoDesktop from "../../../../assets/imgs/logo-rimac-white-desktop.png";
+import LogoMovil from "../../../../assets/imgs/logo-rimac-white-movil.png";
 
 import "./footer.scss";
 
