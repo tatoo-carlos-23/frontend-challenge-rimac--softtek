@@ -1,4 +1,6 @@
 import { Footer } from "./components/Footer";
+import RmButton from "../../../library/components/button/RmButton"; 
+
 const AuthModule = () => {
   return (
     <>
@@ -9,6 +11,14 @@ const AuthModule = () => {
         dolore veritatis illo numquam nesciunt minus amet facere eveniet
         exercitationem reiciendis.
       </div>
+
+      <br />
+      <RmButton
+        size="l"
+        label="Iniciar"
+        changeButton={() => console.warn("Button [l] [secondary]")}
+      />
+      <br />
       <br />
       <Footer />
     </>
