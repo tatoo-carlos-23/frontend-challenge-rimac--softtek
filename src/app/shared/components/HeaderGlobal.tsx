@@ -1,6 +1,6 @@
 import "./header-global.scss";
 
-import LogoRimac from "../../assets/imgs/logo-rimac.png";
+import LogoRimac from "../../../assets/imgs/logo-rimac.png";
 
 const HeaderGlobal = () => {
   return (
