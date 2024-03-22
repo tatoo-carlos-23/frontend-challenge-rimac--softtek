@@ -3,8 +3,10 @@ import BackButton from "../../../../../assets/svgs/back-button.svg";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../core/store/store";
 import "./step-plans-view.scss";
+import CardSelectFor from "../../components/CardSelectFor";
 
 const StepPlansView = (_props: IViewPlansProps) => {
+  
   const user = useSelector((state: RootState) => state.auth);
 
   return (
@@ -19,6 +21,11 @@ const StepPlansView = (_props: IViewPlansProps) => {
         <div className="generale-description description">
           Selecciona la opción que se ajuste más a tus necesidades.
         </div>
+      </div>
+      <div   className="container-step-plans__card-select">
+        <CardSelectFor
+          changeSelected={(type) => console.warn("Select: ", type)}
+        />
       </div>
     </div>
   );
