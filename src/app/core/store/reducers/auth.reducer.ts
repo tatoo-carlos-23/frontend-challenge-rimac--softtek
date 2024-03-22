@@ -1,15 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IUserAuth } from "../types";
 
-const initialState: IUserAuth = { loggued: false } as IUserAuth;
+const initialState: IUserAuth = { loggued: false, name: "" } as IUserAuth;
 
 const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
         setAuth(state, action: PayloadAction<IUserAuth>) {
-            state = action.payload;
-            state.loggued = true;
+            state.loggued =true;
+            state.numberDocument = action.payload.numberDocument;
+            state.numberCellPhone = action.payload.numberCellPhone;
+            state.name = action.payload.name;
+            state.lastName = action.payload.lastName;
+            state.birthDay = action.payload.birthDay;
         },
         setAuthClose(state) {
             state = { loggued: false } as IUserAuth;

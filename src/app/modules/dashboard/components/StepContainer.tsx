@@ -5,7 +5,7 @@ import "./step.scss";
 
 const Step = (props: IItemStep) => {
   return (
-    <div className="container-step">
+    <div className="container-step" key={props.id + "step-fff"}>
       <div
         className={classNames(
           "container-step__id",
@@ -43,18 +43,14 @@ export const StepContainer = (props: IStepContainerProps) => {
     <div className="container-step-c">
       {props.items.map((item, index) => {
         return (
-          <>
+          <div key={"step-div-" + (index + 1)}>
             <Step
               id={parseInt(item.id + "")}
               label="Planes y coberturas"
-              key={"step" + index + 1}
               selected={idSelected.toString() === item.id.toString()}
             />
-            <div
-              className="container-step-c__separator"
-              key={"step-div" + index + 1}
-            ></div>
-          </>
+            <div className="container-step-c__separator"></div>
+          </div>
         );
       })}
     </div>

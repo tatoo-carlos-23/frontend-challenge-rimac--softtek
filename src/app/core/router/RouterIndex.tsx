@@ -5,10 +5,13 @@ import { useEffect, useState } from "react";
 import { IUserAuth } from "../store/types";
 import { SESSION_STORAGE } from "../constants";
 import { setAuth, setAuthClose } from "../store/reducers";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 const RouterIndex = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const dispatch = useDispatch(); 
+  const userAuth = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     try {
@@ -17,20 +20,20 @@ const RouterIndex = () => {
       if (!resSStorage) throw new Error("NO=TOKEN");
       const user = JSON.parse(resSStorage) as IUserAuth;
       if ((user?.name || "").length === 0) throw new Error("NO=USER");
-      dispatch(setAuth({ ...user, loggued: true }));
+      dispatch(setAuth({ ...user, name: user.name, loggued: true }));
     } catch (error) {
       dispatch(setAuthClose());
       setIsLoading(false);
     } finally {
       setIsLoading(false);
-    } 
-  }, [dispatch]);
+    }
+  }, [dispatch, setIsLoading]);
 
   return (
-    <>
+    <> 
       {isLoading && <span>Cargando ...</span>}
-      <AuthRouter />
-      <DashboardRouter   />
+      <AuthRouter isAuth={userAuth?.loggued || false} />
+      <DashboardRouter isAuth={userAuth?.loggued || false} />
     </>
   );
 };
