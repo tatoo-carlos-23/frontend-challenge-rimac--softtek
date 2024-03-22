@@ -2,6 +2,12 @@
     cursor: pointer;
 }
 
+.message-error-form {
+    color: var(--rm-color-error);
+    font-size: 12px;
+    font-weight: 400;
+}
+
 
 
 /* Codigo para el eliminar las botones de disminuir y aumentar */
@@ -10,6 +16,7 @@ input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
 input[type=number] {
     -moz-appearance: textfield;
 }

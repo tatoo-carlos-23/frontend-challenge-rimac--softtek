@@ -1,8 +1,27 @@
 import { API_URL } from "../../../core/constants"
 import { IUserValuesModel } from "../../../core/models"
 
-export const getUserValue = async () => {
+
+const CREDENTIALS = {
+    document: "87654321",
+    phone: "987654321",
+}
+
+export const CREDENTIALS_ERRORS = {
+    document: "ERROR-DOCUMENT-CREDENTIAL",
+    phone: "ERROR-PHONE-CREDENTIAL",
+}
+
+
+export const getUserValue = async (numDocument: string, numPhone: string) => {
     try {
+        if (numDocument !== CREDENTIALS.document) {
+            throw new Error(CREDENTIALS_ERRORS.document)
+        }
+        if (numPhone !== CREDENTIALS.phone) {
+            throw new Error(CREDENTIALS_ERRORS.phone)
+        }
+
         const URL = `${API_URL}/api/user.json`;
         const response = await fetch(URL);
         const data = await response.json();

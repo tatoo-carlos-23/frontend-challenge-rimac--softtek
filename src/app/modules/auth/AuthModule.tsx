@@ -7,7 +7,7 @@ import RmInputSelect from "../../../library/components/input-select/RmInputSelec
 import RmSeparator from "../../../library/components/separator/RmSeparator";
 import RmCheckbox from "../../../library/components/checkbox/RmCheckbox";
 import { IFormAuth } from "../../core/interfaces";
-import { getUserValue } from "./services";
+import { CREDENTIALS_ERRORS, getUserValue } from "./services";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAuth } from "../../core/store/reducers";
@@ -26,6 +26,9 @@ const AuthModule = () => {
     isPrivacyPolicy: false,
   });
 
+  const [messageError, setMessageError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const verifyFormValid = () => {
     return (
       form.numberCellPhone.length > 0 &&
@@ -37,7 +40,13 @@ const AuthModule = () => {
 
   const userValues = async () => {
     try {
-      const user = await getUserValue();
+      setIsLoading(true);
+      setMessageError("");
+      const user = await getUserValue(
+        form.numberDocument,
+        form.numberCellPhone
+      );
+
       const userAuth: IUserAuth = {
         loggued: true,
         numberCellPhone: form.numberCellPhone,
@@ -46,15 +55,23 @@ const AuthModule = () => {
         lastName: user.lastName,
         birthDay: user.birthDay,
       };
+
       dispatch(setAuth({ ...userAuth }));
       navigation("/dashboard");
       sessionStorage.setItem(
         SESSION_STORAGE.TOKEN_AUTH,
         JSON.stringify(userAuth)
       );
-    } catch (error) {
-      console.error("Errorcito: ", error);
+    } catch (error: any) {
+      setMessageError("Ocurrio un error, intente de nuevo.");
+      if (CREDENTIALS_ERRORS["document"] === error?.message) {
+        setMessageError("Documento incorrecto.");
+      }
+      if (CREDENTIALS_ERRORS["phone"] === error?.message) {
+        setMessageError("Numero de celular incorrecto incorrecto.");
+      }
     }
+    setIsLoading(false);
   };
 
   return (
@@ -82,22 +99,22 @@ const AuthModule = () => {
           </div>
           <div className="form-width container-auth__form__inputs">
             <RmInputSelect
-              value={form.numberCellPhone}
+              value={form.numberDocument}
               label="Nro. de documento"
               placeholder="Nro. de documento"
               type="number"
-              changeValue={(numberCellPhone) =>
-                setForm({ ...form, numberCellPhone })
+              changeValue={(numberDocument) =>
+                setForm({ ...form, numberDocument })
               }
             />
             <RmSeparator height={15} />
             <RmInput
-              value={form.numberDocument}
+              value={form.numberCellPhone}
               label="Celular"
               placeholder="Celular"
               type="number"
-              changeValue={(numberDocument) =>
-                setForm({ ...form, numberDocument })
+              changeValue={(numberCellPhone) =>
+                setForm({ ...form, numberCellPhone })
               }
             />
             <RmSeparator height={20} />
@@ -126,11 +143,16 @@ const AuthModule = () => {
               <RmButton
                 label="Cotiza aquí"
                 changeButton={() => userValues()}
-                disabled={!verifyFormValid()}
+                disabled={!verifyFormValid() || isLoading}
                 size={window.innerWidth >= 500 ? "l" : "m"}
                 theme="secondary"
               />
             </div>
+            <RmSeparator height={10} />
+            {messageError.length > 0 && (
+              <span className="message-error-form">{messageError} *</span>
+            )}
+            <RmSeparator height={20} />
           </div>
         </div>
       </div>

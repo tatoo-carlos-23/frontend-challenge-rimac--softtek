@@ -12,3 +12,7 @@ Desarrollo de maquetacion de figma y consumo de api rest.
 ## Link de la aplicacion.
 
 https://challenge-rimac-softtek-cwach.vercel.app/
+
+#### Credenciales: 
+    - Documento: 87654321
+    - Celular: 987654321
