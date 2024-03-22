@@ -8,10 +8,17 @@ import RmSeparator from "../../../library/components/separator/RmSeparator";
 import RmCheckbox from "../../../library/components/checkbox/RmCheckbox";
 import { IFormAuth } from "../../core/interfaces";
 import { getUserValue } from "./services";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setAuth } from "../../core/store/reducers";
+import { IUserAuth } from "../../core/store/types";
+import { SESSION_STORAGE } from "../../core/constants";
 import "./auth-module.scss";
 import "./auth-module-mobile.scss";
 
 const AuthModule = () => {
+  const navigation = useNavigate();
+  const dispatch = useDispatch();
   const [form, setForm] = useState<IFormAuth>({
     numberCellPhone: "",
     numberDocument: "",
@@ -31,7 +38,20 @@ const AuthModule = () => {
   const userValues = async () => {
     try {
       const user = await getUserValue();
-      console.warn("User: ", user);
+      const userAuth: IUserAuth = {
+        loggued: true,
+        numberCellPhone: form.numberCellPhone,
+        numberDocument: form.numberDocument,
+        name: user.name,
+        lastName: user.lastName,
+        birthDay: user.birthDay,
+      };
+      dispatch(setAuth({ ...userAuth }));
+      navigation("/dashboard");
+      sessionStorage.setItem(
+        SESSION_STORAGE.TOKEN_AUTH,
+        JSON.stringify(userAuth)
+      );
     } catch (error) {
       console.error("Errorcito: ", error);
     }
@@ -120,4 +140,4 @@ const AuthModule = () => {
   );
 };
 
-export default AuthModule; 
+export default AuthModule;
