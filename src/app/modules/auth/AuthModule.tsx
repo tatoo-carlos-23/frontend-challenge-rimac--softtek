@@ -9,6 +9,7 @@ import RmCheckbox from "../../../library/components/checkbox/RmCheckbox";
 import { IFormAuth } from "../../core/interfaces";
 import { getUserValue } from "./services";
 import "./auth-module.scss";
+import "./auth-module-mobile.scss";
 
 const AuthModule = () => {
   const [form, setForm] = useState<IFormAuth>({
@@ -101,20 +102,22 @@ const AuthModule = () => {
               Aplican Términos y Condiciones.
             </span>
             <RmSeparator height={20} />
-            <RmButton
-              label="Cotiza aquí"
-              changeButton={() => userValues()}
-              disabled={!verifyFormValid()}
-              size={window.innerWidth >= 500 ? "l" : "m"}
-              theme="secondary"
-            />
+            <div className="container-ca-button">
+              <RmButton
+                label="Cotiza aquí"
+                changeButton={() => userValues()}
+                disabled={!verifyFormValid()}
+                size={window.innerWidth >= 500 ? "l" : "m"}
+                theme="secondary"
+              />
+            </div>
           </div>
         </div>
       </div>
-      <RmSeparator height={80} />
+      <RmSeparator height={90} />
       <Footer />
     </>
   );
 };
 
-export default AuthModule;
+export default AuthModule; 
