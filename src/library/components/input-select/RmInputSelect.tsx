@@ -22,18 +22,27 @@ const RmInputSelect = ({ ...props }: IRmInputSelectProps) => {
     if (props.changeValue) props.changeValue(value);
   };
 
-  return (
+  return ( 
     <div className={classNames("rm-input-select")}>
-      <div className={classNames("rm-input-select__sel")}>
+      <div
+        className={classNames(
+          "rm-input-select__sel",
+          props.error ? "rmis-error" : ""
+        )}
+      >
         <span>DNI</span>
         <span className="material-symbols-outlined">expand_more</span>
       </div>
       <div
-        className={classNames("rm-input-select__inp", isActive ? "active" : "")}
+        className={classNames(
+          "rm-input-select__inp",
+          isActive && !props.error ? "active" : "",
+          props.error ? "rmis-error" : ""
+        )}
       >
         <span className={classNames("label")}>{props.label || "Label"}</span>
         <input
-          className={classNames("rminput")}
+          className={classNames("rminput", props.error ? "rmis-error" : "")}
           type={props?.type ? props.type : "text"}
           placeholder={props.placeholder}
           value={value}
@@ -42,7 +51,7 @@ const RmInputSelect = ({ ...props }: IRmInputSelectProps) => {
           onBlur={() => setIsActive(false)}
         />
       </div>
-    </div>
+    </div> 
   );
 };
 
