@@ -4,10 +4,11 @@ import ImgFamily from "../../../assets/imgs/family.png";
 import RmButton from "../../../library/components/button/RmButton";
 import RmInput from "../../../library/components/input/RmInput";
 import RmInputSelect from "../../../library/components/input-select/RmInputSelect";
+import RmSeparator from "../../../library/components/separator/RmSeparator";
 import RmCheckbox from "../../../library/components/checkbox/RmCheckbox";
 import { IFormAuth } from "../../core/interfaces";
+import { getUserValue } from "./services";
 import "./auth-module.scss";
-import RmSeparator from "../../../library/components/separator/RmSeparator";
 
 const AuthModule = () => {
   const [form, setForm] = useState<IFormAuth>({
@@ -24,6 +25,15 @@ const AuthModule = () => {
       form.isPrivacyPolicy &&
       form.isCommunicationPolicy
     );
+  };
+
+  const userValues = async () => {
+    try {
+      const user = await getUserValue();
+      console.warn("User: ", user);
+    } catch (error) {
+      console.error("Errorcito: ", error);
+    }
   };
 
   return (
@@ -93,7 +103,7 @@ const AuthModule = () => {
             <RmSeparator height={20} />
             <RmButton
               label="Cotiza aquí"
-              changeButton={() => console.warn("Click")}
+              changeButton={() => userValues()}
               disabled={!verifyFormValid()}
               size={window.innerWidth >= 500 ? "l" : "m"}
               theme="secondary"
