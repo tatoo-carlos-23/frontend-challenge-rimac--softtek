@@ -10,3 +10,10 @@ body {
   -moz-osx-font-smoothing: grayscale; */
   font-family: "Montserrat", sans-serif;
 }
+
+
+input,
+span,
+div {
+  font-family: "Montserrat", sans-serif;
+}
