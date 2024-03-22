@@ -1,11 +1,12 @@
 import { Route, Routes } from "react-router-dom";
+import DashBoardModule from "../../modules/dashboard/DashBoardModule";
 
-const Dashboard = () => {
+const DashboardRouter = () => {
   return (
     <Routes>
-      <Route path="/dashboard" element={<div>Dashboard</div>} />
+      <Route path="/dashboard" element={<DashBoardModule />} />
     </Routes>
   );
 };
 
-export default Dashboard;
+export default DashboardRouter;
