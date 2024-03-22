@@ -1,10 +1,13 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import DashBoardModule from "../../modules/dashboard/DashBoardModule";
 
-const DashboardRouter = () => {
+const DashboardRouter = ({ isAuth }: { isAuth: boolean }) => {
   return (
     <Routes>
-      <Route path="/dashboard" element={<DashBoardModule />} />
+      <Route
+        path="/dashboard"
+        element={isAuth ? <DashBoardModule /> : <Navigate to="/" />}
+      />
     </Routes>
   );
 };

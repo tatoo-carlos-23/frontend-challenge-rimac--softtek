@@ -1,10 +1,13 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import AuthModule from "./../../modules/auth/AuthModule";
 
-const AuthRouter = () => {
+const AuthRouter = ({ isAuth }: { isAuth: boolean }) => {
   return (
     <Routes>
-      <Route path="/" element={<AuthModule />} />
+      <Route
+        path="/"
+        element={isAuth ? <Navigate to="/dashboard" /> : <AuthModule />}
+      />
     </Routes>
   );
 };

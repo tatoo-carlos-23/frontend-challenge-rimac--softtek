@@ -1,18 +1,25 @@
 import { IViewPlansProps } from "../../interfaces";
 import BackButton from "../../../../../assets/svgs/back-button.svg";
-import "./step-plans-view.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../core/store/store";
+import "./step-plans-view.scss";
 
 const StepPlansView = (_props: IViewPlansProps) => {
-  const { name } = useSelector((state: RootState) => state.auth);
+  const user = useSelector((state: RootState) => state.auth);
 
   return (
     <div className="container-step-plans">
       <div className="container-step-plans__back-btn">
         <img src={BackButton} alt="back-button" />
       </div>
-      <div>{name}</div>
+      <div className="container-step-plans__description">
+        <div className="generale-description summary">
+          {user.name} ¿Para quién deseas cotizar?
+        </div>
+        <div className="generale-description description">
+          Selecciona la opción que se ajuste más a tus necesidades.
+        </div>
+      </div>
     </div>
   );
 };

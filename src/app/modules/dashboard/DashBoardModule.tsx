@@ -14,7 +14,7 @@ const DashBoardModule = () => {
 
   return (
     <div>
-      <StepContainer items={items} idSelected={selected} />
+      <StepContainer items={items} idSelected={selected}    />
       {selected === 1 ? (
         <StepPlansView handlerNextStep={() => setSelected(2)} />
       ) : (

@@ -8,8 +8,8 @@ import "./App.css";
 function App() {
   return (
     <Provider store={store}>
-      <HeaderGlobal />
       <BrowserRouter>
+        <HeaderGlobal />
         <RouterIndex />
       </BrowserRouter>
     </Provider>
