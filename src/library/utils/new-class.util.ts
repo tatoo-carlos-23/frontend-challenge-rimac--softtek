@@ -6,7 +6,7 @@
 */
 export class setNewClass {
 
-    private styles: string[] = [];
+    private classes: string[] = [];
 
     /**
      * 
@@ -15,7 +15,7 @@ export class setNewClass {
      * agregando.
     */
     public setClass(className: string): this {
-        if (className.trim().length > 0) this.styles.push(className.trim())
+        if (className.trim().length > 0) this.classes.push(className.trim())
         return this;
     }
 
@@ -26,7 +26,7 @@ export class setNewClass {
      * tiene un valor verdadero [true]. 
     */
     public setClassIsValid(className: string, is?: boolean): this {
-        if (className.trim().length > 0 && is) this.styles.push(className.trim())
+        if (className.trim().length > 0 && is) this.classes.push(className.trim())
         return this;
     }
 
@@ -35,6 +35,11 @@ export class setNewClass {
      * @returns Las clases obtenidas desde el array en una cadena de texto, cada una separada por un espacio.
     */
     getClass(): string {
-        return this.styles.join(" ");
+        return this.classes.join(" ");
     }
+}
+
+
+export const classNames = (...classes: string[]) => {
+    return classes.join(" ")
 }
