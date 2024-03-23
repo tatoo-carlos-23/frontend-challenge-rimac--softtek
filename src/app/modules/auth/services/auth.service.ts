@@ -1,5 +1,5 @@
 import { API_URL } from "../../../core/constants"
-import { IUserValuesModel } from "../../../core/models"
+import { UserValuesModel } from "../../../core/models"
 
 
 const CREDENTIALS = {
@@ -25,7 +25,7 @@ export const getUserValue = async (numDocument: string, numPhone: string) => {
         const URL = `${API_URL}/api/user.json`;
         const response = await fetch(URL);
         const data = await response.json();
-        return Promise.resolve(new IUserValuesModel(data))
+        return Promise.resolve(new UserValuesModel(data))
     } catch (err) {
         return Promise.reject(err)
     }
