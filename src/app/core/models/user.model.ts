@@ -1,6 +1,6 @@
 import { IUserValues } from "../interfaces";
 
-export class IUserValuesModel implements IUserValues {
+export class UserValuesModel implements IUserValues {
     name!: string;
     lastName!: string;
     birthDay!: string;

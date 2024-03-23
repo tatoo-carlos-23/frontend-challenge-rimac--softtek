@@ -71,13 +71,25 @@
         zoom: 1;
     }
 
+    &__containt {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
     &__separator {
         height: 2px;
-        border-bottom: 2px dashed #4F4FFF;
         width: 32px;
+        margin-left: 10px;
 
-        &:last-child {
-            display: none;
-        }
+
+    }
+
+    &__separator__active {
+        border-bottom: 2px dashed #4F4FFF;
+    }
+
+    &__separator__inactive {
+        border-bottom: 2px dashed #7981B2;
     }
 }

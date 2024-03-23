@@ -8,7 +8,7 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         setAuth(state, action: PayloadAction<IUserAuth>) {
-            state.loggued =true;
+            state.loggued = true;
             state.numberDocument = action.payload.numberDocument;
             state.numberCellPhone = action.payload.numberCellPhone;
             state.name = action.payload.name;
@@ -16,7 +16,8 @@ const authSlice = createSlice({
             state.birthDay = action.payload.birthDay;
         },
         setAuthClose(state) {
-            state = { loggued: false } as IUserAuth;
+            state.loggued = false;
+            state.name = "";
         },
     }
 })

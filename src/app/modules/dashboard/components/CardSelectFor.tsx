@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProtectionForMe from "../../../../assets/imgs/protection-for-me.png";
 import ProtectionForSomeome from "../../../../assets/imgs/protection-for-someome.png";
 import RadioChecked from "../../../../assets/svgs/radio-btn-checked.svg";
@@ -39,8 +39,15 @@ const Card = (props: {
 
 const CardSelectFor = (props: {
   changeSelected: (val: TCardSelect) => void;
+  value: TCardSelect;
 }) => {
   const [selected, setSelected] = useState<TCardSelect>("");
+
+  useEffect(() => {
+    if (props.value !== "") {
+      setSelected(props.value);
+    }
+  }, [props.value]);
 
   const changeCard = (val: TCardSelect) => {
     setSelected(val);

@@ -43,13 +43,25 @@ export const StepContainer = (props: IStepContainerProps) => {
     <div className="container-step-c">
       {props.items.map((item, index) => {
         return (
-          <div key={"step-div-" + (index + 1)}>
+          <div
+            className="container-step-c__containt"
+            key={"step-div-" + (index + 1)}
+          >
             <Step
               id={parseInt(item.id + "")}
               label="Planes y coberturas"
               selected={idSelected.toString() === item.id.toString()}
             />
-            <div className="container-step-c__separator"></div>
+            {index + 1 < props.items.length && (
+              <div
+                className={classNames(
+                  "container-step-c__separator",
+                  idSelected.toString() === item.id.toString()
+                    ? "container-step-c__separator__active"
+                    : "container-step-c__separator__inactive"
+                )}
+              ></div>
+            )}
           </div>
         );
       })}
