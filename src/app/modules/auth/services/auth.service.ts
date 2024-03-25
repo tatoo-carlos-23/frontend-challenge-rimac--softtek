@@ -23,7 +23,7 @@ export const getUserValue = async (numDocument: string, numPhone: string) => {
         }
 
         const URL = `${API_URL}/api/user.json`;
-        const response = await fetch(URL);
+        const response = await fetch(URL, { method: "GET" });
         const data = await response.json();
         return Promise.resolve(new UserValuesModel(data))
     } catch (err) {
