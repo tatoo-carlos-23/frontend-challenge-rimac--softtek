@@ -35,7 +35,9 @@ const StepSummaryView = (_props: IViewSummaryProps) => {
           <div className="ctnrs-card__detail-plan">
             <div>Plan elegido</div>
             <div>{plan.name}</div>
-            <div>Costo del Plan: ${user.numberCellPhone} al mes</div>
+            <div>
+              Costo del Plan: ${plan.priceDiscount ?? plan.price} al mes
+            </div>
           </div>
         </div>
       </div>

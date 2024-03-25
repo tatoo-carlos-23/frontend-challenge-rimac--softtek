@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux"; 
+import { useSelector, useDispatch } from "react-redux";
 import CardDetailSelect from "../../components/CardDetailSelect";
 import RmSeparator from "../../../../../library/components/separator/RmSeparator";
 import { RootState } from "../../../../core/store/store";
@@ -10,10 +10,12 @@ import { getPlans } from "../../services";
 import { IPlan } from "../../../../core/interfaces";
 import { TCardSelect } from "../../types";
 import "./step-plans-view.scss";
+import RmSpinner from "../../../../../library/components/spinner/RmSpinner";
 
 const StepPlansView = (props: IViewPlansProps) => {
   const [listPlans, setListPlans] = useState<IPlan[]>([]);
   const [typeCard, setTypeCard] = useState<TCardSelect>("");
+  const [isLoadingPlan, setIsLoadingPlan] = useState<boolean>(true);
 
   const dispatch = useDispatch();
 
@@ -21,22 +23,30 @@ const StepPlansView = (props: IViewPlansProps) => {
   const plan = useSelector((state: RootState) => state.plan);
 
   useEffect(() => {
-    getDataPlans();
     if (Object.keys(plan).length > 0) {
-      setTypeCard(plan.typeCard);
+      getDataPlans(plan.typeCard);
     }
-  }, [plan, setTypeCard]);
+  }, [plan]);
 
   const nextView = (val: IPlan) => {
     dispatch(setPlan({ ...val, typeCard: typeCard }));
     if (props.handlerNextStep) props.handlerNextStep();
   };
 
-  const getDataPlans = async () => {
+  const getDataPlans = async (type: TCardSelect) => {
+    setTypeCard(type);
     try {
-      const { list } = await getPlans();
+      setIsLoadingPlan(true);
+      const birthDay = user.birthDay.split("-");
+      const yearsUser = new Date().getFullYear() - parseInt(birthDay[2]);
+      const { list } = await getPlans(yearsUser, type);
       setListPlans(list);
-    } catch (error) {}
+    } catch (error) {
+      alert("Ocurrio un error.");
+      setIsLoadingPlan(false);
+    } finally {
+      setIsLoadingPlan(false);
+    }
   };
 
   return (
@@ -52,13 +62,17 @@ const StepPlansView = (props: IViewPlansProps) => {
       <div className="container-step-plans__card-select">
         <CardSelectFor
           value={typeCard}
-          changeSelected={(type) => setTypeCard(type)}
+          changeSelected={(type) => getDataPlans(type)}
         />
       </div>
       <RmSeparator height={15} />
-      <div></div>
-
-      {typeCard !== "" && (
+      {isLoadingPlan && typeCard !== "" && (
+        <div className="container-g-spinner-center">
+          <RmSpinner />
+          <RmSeparator height={15} />
+        </div>
+      )}
+      {!isLoadingPlan && typeCard !== "" && (
         <CardDetailSelect
           items={listPlans}
           typeCard={typeCard}

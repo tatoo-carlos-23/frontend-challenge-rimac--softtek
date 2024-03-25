@@ -6,6 +6,10 @@ import { TCardSelect } from "../types";
 import { classNames } from "../../../../library/utils";
 import "./card-detail.scss";
 import RmSeparator from "../../../../library/components/separator/RmSeparator";
+import { useMobile } from "../../../core/hooks";
+import { useState } from "react";
+import NextBtn from "../../../../assets/svgs/next-button-pag.svg";
+import LastBtn from "../../../../assets/svgs/last-button-pag.svg";
 
 const DetailSelect = ({
   value,
@@ -64,28 +68,6 @@ const DetailSelect = ({
   );
 };
 
-// const CardDetailSelect = ({
-//   items,
-//   ...props
-// }: {
-//   items: IPlan[];
-//   typeCard: TCardSelect;
-//   changeCard: (i: IPlan) => void;
-// }) => {
-//   return (
-//     <div className="container-card-detail-select">
-//       {items.map((res, index) => (
-//         <DetailSelect
-//           key={index + "card"}
-//           value={res}
-//           typeCard={props.typeCard}
-//           changeCard={(e) => props.changeCard(e)}
-//         />
-//       ))}
-//     </div>
-//   );
-// };
-
 const CardDetailSelect = ({
   items,
   ...props
@@ -94,8 +76,56 @@ const CardDetailSelect = ({
   typeCard: TCardSelect;
   changeCard: (i: IPlan) => void;
 }) => {
+  const [numPage, setNumPage] = useState<number>(1);
+  const { isMobile } = useMobile(493);
+  const isShowLastPage = () => numPage >= 2;
+  const isShowNextPage = () => numPage < items.length;
+
+  if (isMobile) {
+    return (
+      <>
+        <div className={"container-card-detail-select"}>
+          <DetailSelect
+            key={numPage + "card-pag"}
+            value={items[numPage - 1]}
+            typeCard={props.typeCard}
+            changeCard={(e) => props.changeCard(e)}
+          />
+        </div>
+        <div className="container-card-detail-select__pagination">
+          {isShowLastPage() ? (
+            <img
+              className="img-rotate-pag cp"
+              src={NextBtn}
+              alt="next-button-pag"
+              onClick={() => setNumPage(numPage - 1)}
+            />
+          ) : (
+            <img src={LastBtn} alt="last-button-pag" />
+          )}
+          <label>
+            {numPage} / {items.length}
+          </label>
+          {isShowNextPage() ? (
+            <img
+              src={NextBtn}
+              alt="next-button-pag"
+              onClick={() => setNumPage(numPage + 1)}
+            />
+          ) : (
+            <img
+              className="img-rotate-pag"
+              src={LastBtn}
+              alt="last-button-pag"
+            />
+          )}
+        </div>
+      </>
+    );
+  }
+
   return (
-    <div className="container-card-detail-select-pag">
+    <div className={"container-card-detail-select"}>
       {items.map((res, index) => (
         <DetailSelect
           key={index + "card-pag"}

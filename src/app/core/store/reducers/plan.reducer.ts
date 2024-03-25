@@ -14,7 +14,7 @@ const planSlice = createSlice({
             state.age = action.payload.age;
             state.recommendedPlan = action.payload.recommendedPlan;
             state.inHome = action.payload.inHome;
-            state.priceDiscount = action.payload.priceDiscount;
+            state.priceDiscount = action.payload?.priceDiscount;
             state.typeCard = action.payload.typeCard;
         },
         setRemovePlan(state) {
