@@ -18,7 +18,14 @@ const planSlice = createSlice({
             state.typeCard = action.payload.typeCard;
         },
         setRemovePlan(state) {
-            state = undefined as any;
+            state.name = undefined as any;
+            state.price = undefined as any;
+            state.description = undefined as any;
+            state.age = undefined as any;
+            state.recommendedPlan = undefined as any;
+            state.inHome = undefined as any;
+            state.priceDiscount = undefined as any;;
+            state.typeCard = undefined as any;
         },
     }
 })
