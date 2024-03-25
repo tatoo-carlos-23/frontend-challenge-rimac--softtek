@@ -6,6 +6,6 @@ export interface IItemStep extends IItem {
 
 export interface IStepContainerProps {
     items: IItemStep[];
-    changeBack?: (idSelected: string | number) => void;
+    changeBack?: (idSelected:   number) => void;
     idSelected?: string | number;
 }

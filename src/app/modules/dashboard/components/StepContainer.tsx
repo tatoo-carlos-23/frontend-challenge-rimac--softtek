@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { classNames } from "../../../../library/utils";
 import { IItemStep, IStepContainerProps } from "../interfaces";
 import BackButtonMobile from "../../../../assets/svgs/back-button-mobile.svg";
+import BackButton from "../../../../assets/svgs/back-button.svg";
+
 import "./step.scss";
 
 const Step = (props: IItemStep) => {
@@ -39,6 +41,10 @@ export const StepContainer = (props: IStepContainerProps) => {
     setIsMobile(window.innerWidth <= 630);
   };
 
+  const handlerBtnBack = () => {
+    if (props.changeBack) props.changeBack(+idSelected);
+  };
+
   useEffect(() => {
     if (props.idSelected) {
       setIdSelected(props.idSelected);
@@ -52,7 +58,11 @@ export const StepContainer = (props: IStepContainerProps) => {
   if (isMobile) {
     return (
       <div className="container-step-c">
-        <img src={BackButtonMobile} alt="back-button-mobile" />
+        <img
+          src={BackButtonMobile}
+          alt="back-button-mobile"
+          onClick={() => handlerBtnBack()}
+        />
         <label className="container-step-c__steps">
           PASO {props.idSelected} de {props.items.length}
         </label>
@@ -69,32 +79,42 @@ export const StepContainer = (props: IStepContainerProps) => {
   }
 
   return (
-    <div className="container-step-c">
-      {props.items.map((item, index) => {
-        return (
-          <div
-            className="container-step-c__containt"
-            key={"step-div-" + (index + 1)}
-          >
-            <Step
-              id={parseInt(item.id + "")}
-              label={"Planes y coberturas"}
-              selected={idSelected.toString() === item.id.toString()}
-            />
-            {index + 1 < props.items.length && (
-              <div
-                className={classNames(
-                  "container-step-c__separator",
-                  idSelected.toString() === item.id.toString()
-                    ? "container-step-c__separator__active"
-                    : "container-step-c__separator__inactive"
-                )}
-              ></div>
-            )}
-          </div>
-        );
-      })}
-    </div>
+    <>
+      <div className="container-step-c">
+        {props.items.map((item, index) => {
+          return (
+            <div
+              className="container-step-c__containt"
+              key={"step-div-" + (index + 1)}
+            >
+              <Step
+                id={parseInt(item.id + "")}
+                label={"Planes y coberturas"}
+                selected={idSelected.toString() === item.id.toString()}
+              />
+              {index + 1 < props.items.length && (
+                <div
+                  className={classNames(
+                    "container-step-c__separator",
+                    idSelected.toString() === item.id.toString()
+                      ? "container-step-c__separator__active"
+                      : "container-step-c__separator__inactive"
+                  )}
+                ></div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      <div className="container-step-c__btn-back">
+        <img
+          src={BackButton}
+          alt="back-button"
+          className="cp"
+          onClick={() => handlerBtnBack()}
+        />
+      </div>
+    </>
   );
 };
 

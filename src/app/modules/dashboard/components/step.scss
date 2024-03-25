@@ -70,6 +70,36 @@
         column-gap: 10px;
     }
 
+    &__btn-back {
+        width: 100%;
+        padding: 40px 60px;
+        box-sizing: border-box;
+        display: none;
+
+        @media (min-width: 631px) {
+            display: block;
+            padding: 60px 60px;
+        }
+
+        @media (min-width: 1000px) {
+            padding: 60px 160px;
+        }
+
+        @media (min-width: 1200px) {
+            padding: 60px 200px;
+        }
+
+        @media (min-width: 1300px) {
+            padding: 60px 250px;
+        }
+
+
+        img {
+            width: 82px;
+            height: 20px;
+        }
+    }
+
     &__containt {
         display: flex;
         flex-direction: row;
@@ -100,7 +130,7 @@
 
         &__progress-bar {
             border-radius: 20px;
-            height: 6px; 
+            height: 6px;
             background-color: #4F4FFF;
         }
     }
