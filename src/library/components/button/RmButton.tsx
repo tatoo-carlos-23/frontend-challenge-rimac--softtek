@@ -12,7 +12,7 @@ const RmButton = ({
    * @description Solo hara click cuando la propiedad disabled sea diferente de true
    */
   const changeButton = (event: TRmEventButton) => {
-    if (!props?.disabled) props.changeButton(event);
+    if (!props?.disabled && props?.changeButton) props.changeButton(event);
   };
 
   return (

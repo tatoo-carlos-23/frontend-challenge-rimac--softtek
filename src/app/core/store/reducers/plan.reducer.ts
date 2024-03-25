@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IPlanValues } from "../types";
 
-const initialState: IPlanValues = {} as IPlanValues;
+const initialState: IPlanValues = { typeCard: "" } as IPlanValues;
 
 const planSlice = createSlice({
     name: "plan",
@@ -14,11 +14,18 @@ const planSlice = createSlice({
             state.age = action.payload.age;
             state.recommendedPlan = action.payload.recommendedPlan;
             state.inHome = action.payload.inHome;
-            state.priceDiscount = action.payload.priceDiscount;
+            state.priceDiscount = action.payload?.priceDiscount;
             state.typeCard = action.payload.typeCard;
         },
         setRemovePlan(state) {
-            state = undefined as any;
+            state.name = "";
+            state.price = 0;
+            state.description = [];
+            state.age = 0;
+            state.recommendedPlan = undefined;
+            state.inHome = undefined;
+            state.priceDiscount = undefined;
+            state.typeCard = "";
         },
     }
 })

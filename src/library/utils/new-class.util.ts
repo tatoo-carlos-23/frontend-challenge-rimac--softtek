@@ -41,5 +41,6 @@ export class setNewClass {
 
 
 export const classNames = (...classes: string[]) => {
-    return classes.join(" ")
+    classes = classes.filter(res => res.trim().length > 0);
+    return classes.join(" ");
 }

@@ -25,7 +25,7 @@ const RmCheckbox = (props: IRmCheckboxProps) => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           onClick={() => handlerOnInput(false)}
-          className="cp"
+          className="cp" 
         >
           <rect width="20" height="20" rx="4" fill="#0A051E" />
           <path
