@@ -64,6 +64,28 @@ const DetailSelect = ({
   );
 };
 
+// const CardDetailSelect = ({
+//   items,
+//   ...props
+// }: {
+//   items: IPlan[];
+//   typeCard: TCardSelect;
+//   changeCard: (i: IPlan) => void;
+// }) => {
+//   return (
+//     <div className="container-card-detail-select">
+//       {items.map((res, index) => (
+//         <DetailSelect
+//           key={index + "card"}
+//           value={res}
+//           typeCard={props.typeCard}
+//           changeCard={(e) => props.changeCard(e)}
+//         />
+//       ))}
+//     </div>
+//   );
+// };
+
 const CardDetailSelect = ({
   items,
   ...props
@@ -73,10 +95,10 @@ const CardDetailSelect = ({
   changeCard: (i: IPlan) => void;
 }) => {
   return (
-    <div className="container-card-detail-select">
+    <div className="container-card-detail-select-pag">
       {items.map((res, index) => (
         <DetailSelect
-          key={index + "yrueur"}
+          key={index + "card-pag"}
           value={res}
           typeCard={props.typeCard}
           changeCard={(e) => props.changeCard(e)}

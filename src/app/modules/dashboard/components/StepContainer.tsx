@@ -3,7 +3,7 @@ import { classNames } from "../../../../library/utils";
 import { IItemStep, IStepContainerProps } from "../interfaces";
 import BackButtonMobile from "../../../../assets/svgs/back-button-mobile.svg";
 import BackButton from "../../../../assets/svgs/back-button.svg";
-
+import { useMobile } from "../../../core/hooks";
 import "./step.scss";
 
 const Step = (props: IItemStep) => {
@@ -35,24 +35,14 @@ const Step = (props: IItemStep) => {
 
 export const StepContainer = (props: IStepContainerProps) => {
   const [idSelected, setIdSelected] = useState<number | string>(0);
-  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 630);
-
-  const handlerSetIsMobile = () => {
-    setIsMobile(window.innerWidth <= 630);
-  };
-
+  const { isMobile } = useMobile();
   const handlerBtnBack = () => {
     if (props.changeBack) props.changeBack(+idSelected);
   };
-
   useEffect(() => {
     if (props.idSelected) {
       setIdSelected(props.idSelected);
     }
-    window.addEventListener("resize", handlerSetIsMobile);
-    return () => {
-      window.removeEventListener("resize", handlerSetIsMobile);
-    };
   }, [props.idSelected]);
 
   if (isMobile) {

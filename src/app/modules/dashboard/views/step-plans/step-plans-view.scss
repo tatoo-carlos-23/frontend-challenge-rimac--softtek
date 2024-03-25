@@ -5,6 +5,11 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        padding-top: 40px;
+
+        @media (min-width: 631px) {
+            padding-top: 0;
+        }
 
         .generale-description {
             width: 300px;
