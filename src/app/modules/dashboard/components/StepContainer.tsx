@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { classNames } from "../../../../library/utils";
 import { IItemStep, IStepContainerProps } from "../interfaces";
+import BackButtonMobile from "../../../../assets/svgs/back-button-mobile.svg";
+import BackButton from "../../../../assets/svgs/back-button.svg";
+import { useMobile } from "../../../core/hooks";
 import "./step.scss";
 
 const Step = (props: IItemStep) => {
@@ -32,40 +35,76 @@ const Step = (props: IItemStep) => {
 
 export const StepContainer = (props: IStepContainerProps) => {
   const [idSelected, setIdSelected] = useState<number | string>(0);
-
+  const { isMobile } = useMobile();
+  const handlerBtnBack = () => {
+    if (props.changeBack) props.changeBack(+idSelected);
+  };
   useEffect(() => {
     if (props.idSelected) {
       setIdSelected(props.idSelected);
     }
   }, [props.idSelected]);
 
-  return (
-    <div className="container-step-c">
-      {props.items.map((item, index) => {
-        return (
+  if (isMobile) {
+    return (
+      <div className="container-step-c">
+        <img
+          src={BackButtonMobile}
+          alt="back-button-mobile"
+          onClick={() => handlerBtnBack()}
+        />
+        <label className="container-step-c__steps">
+          PASO {props.idSelected} de {props.items.length}
+        </label>
+        <div className="container-step-c__progress">
           <div
-            className="container-step-c__containt"
-            key={"step-div-" + (index + 1)}
-          >
-            <Step
-              id={parseInt(item.id + "")}
-              label="Planes y coberturas"
-              selected={idSelected.toString() === item.id.toString()}
-            />
-            {index + 1 < props.items.length && (
-              <div
-                className={classNames(
-                  "container-step-c__separator",
-                  idSelected.toString() === item.id.toString()
-                    ? "container-step-c__separator__active"
-                    : "container-step-c__separator__inactive"
-                )}
-              ></div>
-            )}
-          </div>
-        );
-      })}
-    </div>
+            style={{
+              width: props.idSelected?.toString() === "1" ? "10px" : "100%",
+            }}
+            className="container-step-c__progress__progress-bar"
+          ></div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="container-step-c">
+        {props.items.map((item, index) => {
+          return (
+            <div
+              className="container-step-c__containt"
+              key={"step-div-" + (index + 1)}
+            >
+              <Step
+                id={parseInt(item.id + "")}
+                label={"Planes y coberturas"}
+                selected={idSelected.toString() === item.id.toString()}
+              />
+              {index + 1 < props.items.length && (
+                <div
+                  className={classNames(
+                    "container-step-c__separator",
+                    idSelected.toString() === item.id.toString()
+                      ? "container-step-c__separator__active"
+                      : "container-step-c__separator__inactive"
+                  )}
+                ></div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      <div className="container-step-c__btn-back">
+        <img
+          src={BackButton}
+          alt="back-button"
+          className="cp"
+          onClick={() => handlerBtnBack()}
+        />
+      </div>
+    </>
   );
 };
 
