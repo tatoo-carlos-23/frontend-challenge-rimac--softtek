@@ -1,8 +1,8 @@
-# RETO TECNICO - RIMAC -- SOFTTEK
+# RETO TECNICO - RIMAC -- SOFTTEK [Frontend Challenge]
 
 ## Descripcion:
 
-Desarrollo de maquetacion de figma y consumo de api rest.
+Desarrollo de maquetacion de figma y consumo de api rest haciendo uso de fecth.
 
 ### Inicar
 
@@ -32,3 +32,10 @@ https://challenge-rimac-softtek-cwach.vercel.app/
 1. Redux toolkit para manejar el estado global de la aplicacion.
 2. React router para manejar diferentes rutas
 3. Sass.
+4. Jest para aplicar test a algunos componentes, reduc, hooks.
+
+### Resumen
+
+- La aplicacion cuenta con de rutas, la principal que se necesitan credenciales, y la ruta /dashboar en esta le permite seleccionar el plan, para este entonces los datos del usuario obtenido se almacenan en redux para mantener el estado.
+
+- Los datos del plan seleccionado tambien se almacenan en redux, para poder visualizarlos en la vista de resumen, y cada vez que se regresaa la pagina principal, los datos deredux se eliminan.
