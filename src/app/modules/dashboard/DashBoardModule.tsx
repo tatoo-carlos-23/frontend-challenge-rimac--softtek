@@ -5,7 +5,7 @@ import StepContainer from "./components/StepContainer";
 import { IItemStep } from "./interfaces";
 import StepPlansView from "./views/step-plans/StepPlansView";
 import StepSummaryView from "./views/step-summary/StepSummaryView";
-import { setAuthClose } from "../../core/store/reducers";
+import { setAuthClose, setRemovePlan } from "../../core/store/reducers";
 
 const items: IItemStep[] = [
   { id: 1, label: "Planes y coberturas" },
@@ -24,6 +24,7 @@ const DashBoardModule = () => {
     if (newStep === 0) {
       sessionStorage.clear();
       dispatch(setAuthClose());
+      dispatch(setRemovePlan());
       navigate("/");
     }
   };

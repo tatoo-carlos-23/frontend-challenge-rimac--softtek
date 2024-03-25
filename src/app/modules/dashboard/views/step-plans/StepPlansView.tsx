@@ -23,10 +23,10 @@ const StepPlansView = (props: IViewPlansProps) => {
   const plan = useSelector((state: RootState) => state.plan);
 
   useEffect(() => {
-    if (Object.keys(plan).length > 0) {
+    if (plan.typeCard !== "") {
       getDataPlans(plan.typeCard);
     }
-  }, [plan]);
+  }, [plan.typeCard]);
 
   const nextView = (val: IPlan) => {
     dispatch(setPlan({ ...val, typeCard: typeCard }));

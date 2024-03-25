@@ -23,6 +23,6 @@ describe('planReducer', () => {
             age: 12
         };
         const newState = planReducer(state, setRemovePlan());
-        expect(newState.name).toEqual(undefined);
+        expect(newState.name).toEqual("");
     });
 });
