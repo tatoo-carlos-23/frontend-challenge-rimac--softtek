@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { classNames } from "../../../../library/utils";
 import { IItemStep, IStepContainerProps } from "../interfaces";
+import BackButtonMobile from "../../../../assets/svgs/back-button-mobile.svg";
 import "./step.scss";
 
 const Step = (props: IItemStep) => {
@@ -32,12 +33,40 @@ const Step = (props: IItemStep) => {
 
 export const StepContainer = (props: IStepContainerProps) => {
   const [idSelected, setIdSelected] = useState<number | string>(0);
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 630);
+
+  const handlerSetIsMobile = () => {
+    setIsMobile(window.innerWidth <= 630);
+  };
 
   useEffect(() => {
     if (props.idSelected) {
       setIdSelected(props.idSelected);
     }
+    window.addEventListener("resize", handlerSetIsMobile);
+    return () => {
+      window.removeEventListener("resize", handlerSetIsMobile);
+    };
   }, [props.idSelected]);
+
+  if (isMobile) {
+    return (
+      <div className="container-step-c">
+        <img src={BackButtonMobile} alt="back-button-mobile" />
+        <label className="container-step-c__steps">
+          PASO {props.idSelected} de {props.items.length}
+        </label>
+        <div className="container-step-c__progress">
+          <div
+            style={{
+              width: props.idSelected?.toString() === "1" ? "10px" : "100%",
+            }}
+            className="container-step-c__progress__progress-bar"
+          ></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container-step-c">
@@ -49,7 +78,7 @@ export const StepContainer = (props: IStepContainerProps) => {
           >
             <Step
               id={parseInt(item.id + "")}
-              label="Planes y coberturas"
+              label={"Planes y coberturas"}
               selected={idSelected.toString() === item.id.toString()}
             />
             {index + 1 < props.items.length && (

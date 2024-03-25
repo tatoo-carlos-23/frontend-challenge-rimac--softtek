@@ -11,10 +11,12 @@ const items: IItemStep[] = [
 
 const DashBoardModule = () => {
   const [selected, setSelected] = useState<number>(1);
-
   return (
     <div>
-      <StepContainer items={items} idSelected={selected}    />
+      <StepContainer
+        items={items}
+        idSelected={selected} 
+      />
       {selected === 1 ? (
         <StepPlansView handlerNextStep={() => setSelected(2)} />
       ) : (
