@@ -7,18 +7,22 @@ import RmInputSelect from "../../../library/components/input-select/RmInputSelec
 import RmSeparator from "../../../library/components/separator/RmSeparator";
 import RmCheckbox from "../../../library/components/checkbox/RmCheckbox";
 import { IFormAuth } from "../../core/interfaces";
-import { CREDENTIALS_ERRORS, getUserValue } from "./services";
+import {
+  CREDENTIALS_ERRORS,
+  getUserValue,
+  verifyCredentials,
+} from "./services";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setAuth } from "../../core/store/reducers";
 import { IUserAuth } from "../../core/store/types";
 import { SESSION_STORAGE } from "../../core/constants";
 import "./auth-module.scss";
 import "./auth-module-mobile.scss";
+import { useUserAuthStore } from "../../core/hooks";
 
 const AuthModule = () => {
   const navigation = useNavigate();
-  const dispatch = useDispatch();
+  const { setUser } = useUserAuthStore();
+
   const [form, setForm] = useState<IFormAuth>({
     numberCellPhone: "",
     numberDocument: "",
@@ -42,11 +46,9 @@ const AuthModule = () => {
     try {
       setIsLoading(true);
       setMessageError("");
-      const user = await getUserValue(
-        form.numberDocument,
-        form.numberCellPhone
-      );
 
+      verifyCredentials(form.numberDocument, form.numberCellPhone);
+      const user = await getUserValue();
       const userAuth: IUserAuth = {
         loggued: true,
         numberCellPhone: form.numberCellPhone,
@@ -56,7 +58,7 @@ const AuthModule = () => {
         birthDay: user.birthDay,
       };
 
-      dispatch(setAuth({ ...userAuth }));
+      setUser(userAuth);
       navigation("/dashboard");
       sessionStorage.setItem(
         SESSION_STORAGE.TOKEN_AUTH,
@@ -68,7 +70,7 @@ const AuthModule = () => {
         setMessageError("Documento incorrecto.");
       }
       if (CREDENTIALS_ERRORS["phone"] === error?.message) {
-        setMessageError("Numero de celular incorrecto incorrecto.");
+        setMessageError("Numero de celular incorrecto.");
       }
     }
     setIsLoading(false);

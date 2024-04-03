@@ -1,26 +1,22 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import CardDetailSelect from "../../components/CardDetailSelect";
 import RmSeparator from "../../../../../library/components/separator/RmSeparator";
-import { RootState } from "../../../../core/store/store";
 import { IViewPlansProps } from "../../interfaces";
 import CardSelectFor from "../../components/CardSelectFor";
-import { setPlan } from "../../../../core/store/reducers";
 import { getPlans } from "../../services";
 import { IPlan } from "../../../../core/interfaces";
 import { TCardSelect } from "../../types";
 import "./step-plans-view.scss";
 import RmSpinner from "../../../../../library/components/spinner/RmSpinner";
+import { usePlanStore, useUserAuthStore } from "../../../../core/hooks";
 
 const StepPlansView = (props: IViewPlansProps) => {
   const [listPlans, setListPlans] = useState<IPlan[]>([]);
   const [typeCard, setTypeCard] = useState<TCardSelect>("");
   const [isLoadingPlan, setIsLoadingPlan] = useState<boolean>(true);
 
-  const dispatch = useDispatch();
-
-  const user = useSelector((state: RootState) => state.auth);
-  const plan = useSelector((state: RootState) => state.plan);
+  const { user } = useUserAuthStore();
+  const { plan, setNewPlan } = usePlanStore();
 
   useEffect(() => {
     if (plan.typeCard !== "") {
@@ -29,7 +25,7 @@ const StepPlansView = (props: IViewPlansProps) => {
   }, [plan.typeCard]);
 
   const nextView = (val: IPlan) => {
-    dispatch(setPlan({ ...val, typeCard: typeCard }));
+    setNewPlan({ ...val, typeCard: typeCard });
     if (props.handlerNextStep) props.handlerNextStep();
   };
 

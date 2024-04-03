@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom"; 
 import StepContainer from "./components/StepContainer";
 import { IItemStep } from "./interfaces";
 import StepPlansView from "./views/step-plans/StepPlansView";
-import StepSummaryView from "./views/step-summary/StepSummaryView";
-import { setAuthClose, setRemovePlan } from "../../core/store/reducers";
+import StepSummaryView from "./views/step-summary/StepSummaryView"; 
+import { usePlanStore, useUserAuthStore } from "../../core/hooks";
 
 const items: IItemStep[] = [
   { id: 1, label: "Planes y coberturas" },
@@ -15,16 +14,18 @@ const items: IItemStep[] = [
 const DashBoardModule = () => {
   const [selected, setSelected] = useState<number>(1);
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { setRemovUser } = useUserAuthStore();
+  const { setDeletePlan } = usePlanStore();
 
+  const navigate = useNavigate();
+ 
   const handleBackStep = (step: number) => {
     const newStep = step - 1;
     setSelected(newStep);
     if (newStep === 0) {
       sessionStorage.clear();
-      dispatch(setAuthClose());
-      dispatch(setRemovePlan());
+      setRemovUser();
+      setDeletePlan();
       navigate("/");
     }
   };
