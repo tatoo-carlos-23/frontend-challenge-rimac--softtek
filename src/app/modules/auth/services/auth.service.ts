@@ -12,16 +12,18 @@ export const CREDENTIALS_ERRORS = {
     phone: "ERROR-PHONE-CREDENTIAL",
 }
 
+export const verifyCredentials = (numDocument: string, numPhone: string) => {
+    if (numDocument !== CREDENTIALS.document) {
+        throw new Error(CREDENTIALS_ERRORS.document)
+    }
+    if (numPhone !== CREDENTIALS.phone) {
+        throw new Error(CREDENTIALS_ERRORS.phone)
+    }
+}
 
-export const getUserValue = async (numDocument: string, numPhone: string) => {
+
+export const getUserValue = async () => {
     try {
-        if (numDocument !== CREDENTIALS.document) {
-            throw new Error(CREDENTIALS_ERRORS.document)
-        }
-        if (numPhone !== CREDENTIALS.phone) {
-            throw new Error(CREDENTIALS_ERRORS.phone)
-        }
-
         const URL = `${API_URL}/api/user.json`;
         const response = await fetch(URL, { method: "GET" });
         const data = await response.json();

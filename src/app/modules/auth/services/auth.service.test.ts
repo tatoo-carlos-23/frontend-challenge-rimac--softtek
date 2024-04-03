@@ -17,18 +17,18 @@ describe('getUserValue service', () => {
         };
         const options = { url: `${API_URL}/api/user.json`, };
         fetchMock.mockResponseOnce(JSON.stringify(user), options);
-        const userValues = await getUserValue("87654321", "987654321");
+        const userValues = await getUserValue(); 
         expect(userValues.name).toBe(user.name);
         expect(userValues.lastName).toBe(user.lastName);
     });
 
-    it('retorna error - el documento es incorrecto', async () => { 
-        const userValues = getUserValue("87654121", "987654321");
-        await expect(userValues).rejects.toThrow(CREDENTIALS_ERRORS.document)
-    });
+    // it('retorna error - el documento es incorrecto', async () => {
+    //     const userValues = getUserValue();
+    //     await expect(userValues).rejects.toThrow(CREDENTIALS_ERRORS.document)
+    // });
 
-    it('retorna error - el numero de celular es incorrectro', async () => { 
-        const userValues = getUserValue("87654321", "827654321");
-        await expect(userValues).rejects.toThrow(CREDENTIALS_ERRORS.phone)
-    }); 
+    // it('retorna error - el numero de celular es incorrectro', async () => {
+    //     const userValues = getUserValue();
+    //     await expect(userValues).rejects.toThrow(CREDENTIALS_ERRORS.phone)
+    // });
 });

@@ -7,8 +7,12 @@ import RmInputSelect from "../../../library/components/input-select/RmInputSelec
 import RmSeparator from "../../../library/components/separator/RmSeparator";
 import RmCheckbox from "../../../library/components/checkbox/RmCheckbox";
 import { IFormAuth } from "../../core/interfaces";
-import { CREDENTIALS_ERRORS, getUserValue } from "./services";
-import { useNavigate } from "react-router-dom"; 
+import {
+  CREDENTIALS_ERRORS,
+  getUserValue,
+  verifyCredentials,
+} from "./services";
+import { useNavigate } from "react-router-dom";
 import { IUserAuth } from "../../core/store/types";
 import { SESSION_STORAGE } from "../../core/constants";
 import "./auth-module.scss";
@@ -16,7 +20,7 @@ import "./auth-module-mobile.scss";
 import { useUserAuthStore } from "../../core/hooks";
 
 const AuthModule = () => {
-  const navigation = useNavigate(); 
+  const navigation = useNavigate();
   const { setUser } = useUserAuthStore();
 
   const [form, setForm] = useState<IFormAuth>({
@@ -24,8 +28,8 @@ const AuthModule = () => {
     numberDocument: "",
     isCommunicationPolicy: false,
     isPrivacyPolicy: false,
-  }); 
- 
+  });
+
   const [messageError, setMessageError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -42,11 +46,9 @@ const AuthModule = () => {
     try {
       setIsLoading(true);
       setMessageError("");
-      const user = await getUserValue(
-        form.numberDocument,
-        form.numberCellPhone
-      );
 
+      verifyCredentials(form.numberDocument, form.numberCellPhone);
+      const user = await getUserValue();
       const userAuth: IUserAuth = {
         loggued: true,
         numberCellPhone: form.numberCellPhone,
@@ -55,7 +57,7 @@ const AuthModule = () => {
         lastName: user.lastName,
         birthDay: user.birthDay,
       };
- 
+
       setUser(userAuth);
       navigation("/dashboard");
       sessionStorage.setItem(
@@ -68,7 +70,7 @@ const AuthModule = () => {
         setMessageError("Documento incorrecto.");
       }
       if (CREDENTIALS_ERRORS["phone"] === error?.message) {
-        setMessageError("Numero de celular incorrecto incorrecto.");
+        setMessageError("Numero de celular incorrecto.");
       }
     }
     setIsLoading(false);
