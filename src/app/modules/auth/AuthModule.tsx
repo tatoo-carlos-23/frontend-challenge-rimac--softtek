@@ -8,24 +8,24 @@ import RmSeparator from "../../../library/components/separator/RmSeparator";
 import RmCheckbox from "../../../library/components/checkbox/RmCheckbox";
 import { IFormAuth } from "../../core/interfaces";
 import { CREDENTIALS_ERRORS, getUserValue } from "./services";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setAuth } from "../../core/store/reducers";
+import { useNavigate } from "react-router-dom"; 
 import { IUserAuth } from "../../core/store/types";
 import { SESSION_STORAGE } from "../../core/constants";
 import "./auth-module.scss";
 import "./auth-module-mobile.scss";
+import { useUserAuthStore } from "../../core/hooks";
 
 const AuthModule = () => {
-  const navigation = useNavigate();
-  const dispatch = useDispatch();
+  const navigation = useNavigate(); 
+  const { setUser } = useUserAuthStore();
+
   const [form, setForm] = useState<IFormAuth>({
     numberCellPhone: "",
     numberDocument: "",
     isCommunicationPolicy: false,
     isPrivacyPolicy: false,
-  });
-
+  }); 
+ 
   const [messageError, setMessageError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -55,8 +55,8 @@ const AuthModule = () => {
         lastName: user.lastName,
         birthDay: user.birthDay,
       };
-
-      dispatch(setAuth({ ...userAuth }));
+ 
+      setUser(userAuth);
       navigation("/dashboard");
       sessionStorage.setItem(
         SESSION_STORAGE.TOKEN_AUTH,

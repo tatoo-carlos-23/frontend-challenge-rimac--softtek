@@ -1,14 +1,12 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../core/store/store";
 import { IViewSummaryProps } from "../../interfaces";
 import RmSeparator from "../../../../../library/components/separator/RmSeparator";
 import LogoFamilyBlack from "../../../../../assets/svgs/logo-family-black.svg";
 import "./step-summary.scss";
+import { usePlanStore, useUserAuthStore } from "../../../../core/hooks";
 
 const StepSummaryView = (_props: IViewSummaryProps) => {
-  const plan = useSelector((state: RootState) => state.plan);
-  const user = useSelector((state: RootState) => state.auth);
-
+  const { plan } = usePlanStore();
+  const { user } = useUserAuthStore();
   return (
     <div className="container-summary">
       <div className="container-summary__child">
